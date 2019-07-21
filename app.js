@@ -23,8 +23,27 @@ function calculateMonthlyPayment(loanAmount, interestRate, numberOfMonths) {
     return loanAmount * (numerator / denominator);
 }
 
+// Show Error
+function showError(error) {
+    const errorDiv = document.createElement("div");
+    errorDiv.className = "alert alert-danger";
+    errorDiv.appendChild(document.createTextNode(error));
+    const card = document.querySelector(".card");
+    const heading = document.querySelector(".heading");
+    card.insertBefore(errorDiv, heading);
+    setTimeout(() => {
+        document.querySelector(".alert").remove();
+    }, 3000);
+}
+
 // Loan calculator
 function calculateLoan(e) {
+    // Error Checking
+    if (amount.value === '' || interest.value === '' || years.value === '') {
+        showError("Please check your values");
+        e.preventDefault();
+        return;
+    }
     // Loan amount
     const loanAmount = amount.value;
     // Interest in Percentage
